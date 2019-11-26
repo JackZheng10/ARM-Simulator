@@ -56,11 +56,11 @@ STUR: 10101011 <br/>
 
 ### `disassembly.txt`
 
-Shows each 32-bit instruction word and the corresponding instruction or memory value.
+Shows each 32-bit instruction word, its address, and its corresponding instruction or memory value.
 
 ### `simulation.txt`
 
-Shows a simulation of the program run. Displays each cycle and the instruction that ran along with values in registers and memory.
+Shows a simulation of the program run. Shows the cycle number, instruction ran and its address, and values in registers and memory.
 
 ## Notes
 
