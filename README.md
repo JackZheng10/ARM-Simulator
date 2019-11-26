@@ -27,7 +27,7 @@ ANDI: 1000100 <br/>
 
 ### Category 3:
 
-**ADD, SUB, AND, OR, EOR, LSR, LSL**
+**ADD, SUB, AND, ORR, EOR, LSR, LSL**
 
 32-bit format:
 001 + [Opcode (8 bits)] + [Dest (5 bits)] + [Src1 (5 bits)] + [Src2 (5 bits)] + 000000
