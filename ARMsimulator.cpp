@@ -6,14 +6,14 @@
 #include "Instruction.h"
 
 //begin implementation of main program 
-int programCounter = 64;
+int32_t	programCounter = 64;
 
 //used for printing of memory contents - differentiates between memory and instruction addresses 
-int memBegin;
-int memEnd;
+int32_t	memBegin;
+int32_t	memEnd;
 
 //used to evaluate an instruction and update appropriate fields in memory, registers, and/or program counter 
-void evaluate(map<int, Instruction>& instructions, map<int, long>& memory, vector<long>& registers, int& programCounter) {
+void evaluate(map<int32_t, Instruction>& instructions, map<int32_t, int32_t>& memory, vector<int32_t>& registers, int32_t& programCounter) {
 	Instruction current = instructions[programCounter];
 
 	if (current.getType() == "CBZ") {
@@ -41,15 +41,15 @@ void evaluate(map<int, Instruction>& instructions, map<int, long>& memory, vecto
 		programCounter += 4;
 	}
 	else if (current.getType() == "ANDI") {
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] & (unsigned long)current.getImmediateValue();
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] & (uint32_t)current.getImmediateValue();
 		programCounter += 4;
 	}
 	else if (current.getType() == "ORRI") {
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] | (unsigned long)current.getImmediateValue();
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] | (uint32_t)current.getImmediateValue();
 		programCounter += 4;
 	}
 	else if (current.getType() == "EORI") {
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] ^ (unsigned long)current.getImmediateValue();
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] ^ (uint32_t)current.getImmediateValue();
 		programCounter += 4;
 	}
 	else if (current.getType() == "ADD") {
@@ -61,25 +61,25 @@ void evaluate(map<int, Instruction>& instructions, map<int, long>& memory, vecto
 		programCounter += 4;
 	}
 	else if (current.getType() == "AND") {
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] & (unsigned long)registers[current.getSrcTwo()];
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] & (uint32_t)registers[current.getSrcTwo()];
 		programCounter += 4;
 	}
 	else if (current.getType() == "ORR") {
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] | (unsigned long)registers[current.getSrcTwo()];
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] | (uint32_t)registers[current.getSrcTwo()];
 		programCounter += 4;
 	}
 	else if (current.getType() == "EOR") {
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] ^ (unsigned long)registers[current.getSrcTwo()];
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] ^ (uint32_t)registers[current.getSrcTwo()];
 		programCounter += 4;
 	}
 	else if (current.getType() == "LSR") {
-		unsigned long fiveLSB = registers[current.getSrcTwo()] & (unsigned long)31;
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] >> fiveLSB;
+		uint32_t fiveLSB = registers[current.getSrcTwo()] & (uint32_t)31;
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] >> fiveLSB;
 		programCounter += 4;
 	}
 	else if (current.getType() == "LSL") {
-		unsigned long fiveLSB = registers[current.getSrcTwo()] & (unsigned long)31;
-		registers[current.getDest()] = (unsigned long)registers[current.getSrcOne()] << fiveLSB; 
+		uint32_t fiveLSB = registers[current.getSrcTwo()] & (uint32_t)31;
+		registers[current.getDest()] = (uint32_t)registers[current.getSrcOne()] << fiveLSB;
 		programCounter += 4;
 	}
 	else if (current.getType() == "LDUR") {
@@ -94,15 +94,15 @@ void evaluate(map<int, Instruction>& instructions, map<int, long>& memory, vecto
 }
 
 //used to output a layout of instructions, their addresses, and memory values along with their addresses  
-void disassemble(map<int, Instruction>& instructions, map<int, long>& memory, vector<string>& instructionRead) {
-	//outputs into disassembly.txt 
+void disassemble(map<int32_t, Instruction>& instructions, map<int32_t, int32_t>& memory, vector<string>& instructionRead) {
+	//outputs int32_t	o disassembly.txt 
 	ofstream file("disassembly.txt");
 
-	int index = 0;
-	int memIndex = 64;
+	int32_t index = 0;
+	int32_t	memIndex = 64;
 
 	if (file.is_open()) {
-		for (unsigned int x = index; x < instructions.size(); x++) {
+		for (uint32_t	 x = index; x < instructions.size(); x++) {
 			//prints out the raw binary, its address, and a built disassembled instruction in human-readable format
 			file << instructionRead[x];
 			file << "\t";
@@ -209,7 +209,7 @@ void disassemble(map<int, Instruction>& instructions, map<int, long>& memory, ve
 			memIndex += 4;
 		}
 
-		for (unsigned int x = index; x < memory.size() + instructions.size(); x++) {
+		for (uint32_t x = index; x < memory.size() + instructions.size(); x++) {
 			//prints out memory address and its initial value 
 			file << instructionRead[x];
 			file << "\t";
@@ -225,7 +225,7 @@ void disassemble(map<int, Instruction>& instructions, map<int, long>& memory, ve
 	}
 }
 
-int main(int argc, char* argv[])
+int	main(int argc, char* argv[])
 {
 	//read the input file and store the raw binary in a vector
 	ifstream fileRead(argv[1]);
@@ -243,15 +243,15 @@ int main(int argc, char* argv[])
 
 	//find the index of the dummy instruction 10100000000000000000000000000000, which has memory values following it
 	auto myIterator = find(instructionRead.begin(), instructionRead.end(), "10100000000000000000000000000000");
-	int indexDummy = myIterator - instructionRead.begin();
+	int32_t	 indexDummy = myIterator - instructionRead.begin();
 
 	//each instruction has a unique address, starting from 64 (last instruction is the dummy)
 	//translate the instruction into an instruction object 
 	//map each instruction to its address using an ordered map
-	map<int, Instruction> instructions;
-	int indexInstruction = 64;
-	int indexVector = 0;
-	for (int x = indexVector; x < indexDummy + 1; x++) {
+	map<int32_t, Instruction> instructions;
+	int32_t	indexInstruction = 64;
+	int32_t	indexVector = 0;
+	for (int32_t x = indexVector; x < indexDummy + 1; x++) {
 		instructions[indexInstruction] = Instruction(instructionRead[x]);
 		indexInstruction += 4;
 		indexVector++;
@@ -260,21 +260,21 @@ int main(int argc, char* argv[])
 	//load the values following last instruction into a map representing memory indexed by its address
 	//4 byte word length
 	//set initial and ending values for memory address to be used in printing
-	map<int, long> memory;
+	map<int32_t	, int32_t> memory;
 	memBegin = indexInstruction;
 
-	for (unsigned int x = indexVector; x < instructionRead.size(); x++) {
-		long value = 0;
+	for (uint32_t x = indexVector; x < instructionRead.size(); x++) {
+		int32_t	value = 0;
 
 		//push the correct value based on the sign 
 		if (instructionRead[x].at(0) == '0') {
 			value = stol(instructionRead[x], 0, 2);
 		}
 		else {
-			long long rawBinary = stoll(instructionRead[x], 0, 2);
-			long long flipped = rawBinary ^ 4294967295;
-			long posRepresentation = flipped + 1;
-			value = (long)0 - posRepresentation;
+			int32_t	rawBinary = stoll(instructionRead[x], 0, 2);
+			int32_t	flipped = rawBinary ^ 4294967295;
+			int32_t	posRepresentation = flipped + 1;
+			value = (int32_t)0 - posRepresentation;
 		}
 
 		memory[indexInstruction] = value;
@@ -284,14 +284,14 @@ int main(int argc, char* argv[])
 	memEnd = indexInstruction;
 
 	//declare 32 registers, each with a default value of 0
-	vector<long> registers(32, 0);
+	vector<int32_t> registers(32, 0);
 
 	//outputs disassembly.txt using the disassemble method 
 	disassemble(instructions, memory, instructionRead);
 
 	//initialize variables used for simulation run 
 	bool dummyReached = false;
-	int cycle = 1;
+	int32_t	cycle = 1;
 
 	//instructions will run until the dummy instruction is reached
 	//also outputs simulation.txt to show the run 
@@ -316,40 +316,40 @@ int main(int argc, char* argv[])
 			//print contents of all registers 
 			fileWrite << "Registers" << endl;
 			fileWrite << "X00:";
-			for (unsigned int x = 0; x < 8; x++) {
+			for (uint32_t x = 0; x < 8; x++) {
 				fileWrite << "\t" << registers[x];
 			}
 			fileWrite << endl;
 
 			fileWrite << "X08:";
-			for (unsigned int x = 8; x < 16; x++) {
+			for (uint32_t x = 8; x < 16; x++) {
 				fileWrite << "\t" << registers[x];
 			}
 			fileWrite << endl;
 
 			fileWrite << "X16:";
-			for (unsigned int x = 16; x < 24; x++) {
+			for (uint32_t x = 16; x < 24; x++) {
 				fileWrite << "\t" << registers[x];
 			}
 			fileWrite << endl;
 
 			fileWrite << "X24:";
-			for (unsigned int x = 24; x < 32; x++) {
+			for (uint32_t x = 24; x < 32; x++) {
 				fileWrite << "\t" << registers[x];
 			}
 			fileWrite << endl;
 
 			fileWrite << endl;
 
-			//print contents of all memory addresses  
+			//print	contents of all memory addresses  
 			fileWrite << "Data" << endl;
-			int x = memBegin;
-			int indexTemp = memBegin;
+			int32_t	x = memBegin;
+			int32_t	indexTemp = memBegin;
 
 			for (x; x < memEnd; x += 32) {
 				fileWrite << x << ":";
 
-				for (int y = 0; y < 8; y++) {
+				for (int32_t y = 0; y < 8; y++) {
 					if (indexTemp != memEnd) {
 						fileWrite << "\t" << memory[indexTemp];
 					}

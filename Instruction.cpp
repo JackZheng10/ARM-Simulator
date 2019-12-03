@@ -3,12 +3,12 @@
 Instruction::Instruction(string binary) {
 	type = "DEFAULT";
 	disassembled = "DEFAULT";
-	srcOne = NAN;
-	srcTwo = NAN;
-	offset = NAN;
-	dest = NAN;
-	immediateValue = NAN;
-	srcdst = NAN; 
+	srcOne = 0;
+	srcTwo = 0;
+	offset = 0;
+	dest = 0;
+	immediateValue = 0;
+	srcdst = 0; 
 
 	//determine type of instruction and set appropriate variables 
 	if (binary == "10100000000000000000000000000000") {
@@ -36,9 +36,9 @@ Instruction::Instruction(string binary) {
 				offset = stoi(offsetBinary, 0, 2);
 			}
 			else {
-				long offsetRaw = stol(offsetBinary, 0, 2);
-				long offsetFlipped = offsetRaw ^ 524287;
-				long offsetPos = offsetFlipped + 1;
+				int32_t	offsetRaw = stol(offsetBinary, 0, 2);
+				int32_t	offsetFlipped = offsetRaw ^ 524287;
+				int32_t	offsetPos = offsetFlipped + 1;
 				offset = 0 - offsetPos;
 			}
 		}
@@ -119,9 +119,9 @@ Instruction::Instruction(string binary) {
 				immediateValue = stoi(immediateBinary, 0, 2);
 			}
 			else {
-				long immediateRaw = stol(immediateBinary, 0, 2);
-				long immediateFlipped = immediateRaw ^ 2047;
-				long immediatePos = immediateFlipped + 1;
+				int32_t	immediateRaw = stol(immediateBinary, 0, 2);
+				int32_t	immediateFlipped = immediateRaw ^ 2047;
+				int32_t	immediatePos = immediateFlipped + 1;
 				immediateValue = 0 - immediatePos;
 			}
 		}
@@ -131,12 +131,12 @@ Instruction::Instruction(string binary) {
 Instruction::Instruction() {
 	type = "DEFAULT";
 	disassembled = "DEFAULT";
-	srcOne = NAN;
-	srcTwo = NAN;
-	offset = NAN;
-	dest = NAN;
-	immediateValue = NAN;
-	srcdst = NAN;
+	srcOne = 0;
+	srcTwo = 0;
+	offset = 0;
+	dest = 0;
+	immediateValue = 0;
+	srcdst = 0;
 }
 
 string Instruction::getType() {
@@ -151,26 +151,26 @@ void Instruction::setDisassembled(string disassembled) {
 	this->disassembled = disassembled;
 }
 
-int Instruction::getSrcOne() {
+int32_t	Instruction::getSrcOne() {
 	return srcOne;
 }
 
-int Instruction::getSrcTwo() {
+int32_t	Instruction::getSrcTwo() {
 	return srcTwo;
 }
 
-int Instruction::getOffset() {
+int32_t	Instruction::getOffset() {
 	return offset;
 }
 
-int Instruction::getDest() {
+int32_t	Instruction::getDest() {
 	return dest;
 }
 
-long Instruction::getImmediateValue() {
+int32_t	Instruction::getImmediateValue() {
 	return immediateValue;
 }
 
-int Instruction::getSrcDst() {
+int32_t	Instruction::getSrcDst() {
 	return srcdst;
 }
