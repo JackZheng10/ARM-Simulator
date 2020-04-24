@@ -64,8 +64,8 @@ Shows a simulation of the program run. Shows the cycle number, instruction ran a
 
 ## Notes
 
--Instructions are based on the Arm Instruction Set V1.0. <br/>
--File is taken in as a command line argument. <br/>
+-Instructions are based on the ARM Instruction Set V1.0. <br/>
+-Input file name is taken in as a command line argument. <br/>
 -Words are 4 bytes long. <br/>
 -Instructions begin at address 64. <br/>
 -LSL and LSR use the 5 least significant bits of Src2. <br/>
