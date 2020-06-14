@@ -65,6 +65,7 @@ Shows a simulation of the program run. Shows the cycle number, instruction ran a
 ## How to run
 
 - Compile the program with the given makefile. For example, with GCC, run `make` and then `./ARMSimulator.out fileName.txt`.
+- The input and output files use the root directory as their working directory. 
 
 ## Notes
 
