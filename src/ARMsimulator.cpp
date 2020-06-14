@@ -228,6 +228,13 @@ void disassemble(map<int32_t, Instruction>& instructions, map<int32_t, int32_t>&
 int	main(int argc, char* argv[])
 {
 	//read the input file and store the raw binary in a vector
+
+	//check for command line arg
+	if (!argv[1]){
+		cout << "Please specify a .txt file name." << endl;
+		return 0;
+	}
+
 	ifstream fileRead(argv[1]);
 	vector<string> instructionRead;
 
@@ -239,6 +246,9 @@ int	main(int argc, char* argv[])
 		}
 
 		fileRead.close();
+	} else {
+		cout << "Could not open file. Please make sure it's a valid .txt file name." << endl;
+		return 0;
 	}
 
 	//find the index of the dummy instruction 10100000000000000000000000000000, which has memory values following it
