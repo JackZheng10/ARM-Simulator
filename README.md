@@ -69,11 +69,17 @@ Shows a simulation of the program run. Shows the cycle number, instruction ran a
 
 ## Notes
 
-- Instructions are based on the ARM Instruction Set V1.0. <br/>
-- Input file name is taken in as a command line argument. <br/>
-- Words are 4 bytes long. <br/>
-- Instructions begin at address 64. <br/>
-- LSL and LSR use the 5 least significant bits of Src2. <br/>
-- There are 32 registers. <br/>
-- There is a dummy instruction "10100000000000000000000000000000" which indicates the end of instructions and the beginning of 32-bit 2s-complement signed values in memory to be initialized. Memory addresses naturally begin right after this dummy instruction's address. <br/>
+- Instructions are based on the ARM Instruction Set V1.0. 
+- Input file name is taken in as a command line argument. 
+- Words are 4 bytes long. 
+- Instructions begin at address 64. 
+- LSL and LSR use the 5 least significant bits of Src2.
+- There are 32 registers. 
+- There is a dummy instruction "10100000000000000000000000000000" which indicates the end of instructions and the beginning of 32-bit 2s-complement signed values in memory to be initialized. Memory addresses naturally begin right after this dummy instruction's address. 
 - For the newline character, Linux uses "/n" while Windows uses "\r\n". So, for example, you will get an infinite loop error if you compile in a Linux environment using an input file generated in a Windows one. Therefore, **the sample input will not work**. It is merely there to provide you an example of what it should look like.
+
+## Improvements
+
+- Usage of enums so switch statements can be used in place of if-else chaining
+- Support for more instructions 
+- User defined register number and size
